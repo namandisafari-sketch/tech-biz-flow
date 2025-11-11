@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import StatCard from "@/components/StatCard";
 import JobStatusBadge from "@/components/JobStatusBadge";
@@ -68,6 +69,8 @@ const lowStockItems = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  
   return (
     <Layout>
       <div className="p-8 space-y-8">
@@ -79,7 +82,7 @@ export default function Dashboard() {
               Welcome back! Here's your shop overview.
             </p>
           </div>
-          <Button size="lg" className="gap-2">
+          <Button size="lg" className="gap-2" onClick={() => navigate("/jobs/new")}>
             <Plus className="h-4 w-4" />
             New Job
           </Button>

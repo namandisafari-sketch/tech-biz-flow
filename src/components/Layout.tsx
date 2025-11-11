@@ -21,10 +21,10 @@ interface LayoutProps {
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Wrench, label: "Jobs", path: "/jobs" },
-  { icon: Package, label: "Inventory", path: "/inventory" },
   { icon: Users, label: "Customers", path: "/customers" },
-  { icon: Receipt, label: "Billing", path: "/billing" },
-  { icon: BarChart3, label: "Reports", path: "/reports" },
+  { icon: Package, label: "Inventory", path: "/inventory" },
+  { icon: Receipt, label: "Invoices", path: "/invoices" },
+  { icon: BarChart3, label: "POS", path: "/pos" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 

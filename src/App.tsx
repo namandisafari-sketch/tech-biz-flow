@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
+import NewJob from "./pages/NewJob";
+import Customers from "./pages/Customers";
+import Inventory from "./pages/Inventory";
+import Invoices from "./pages/Invoices";
+import POS from "./pages/POS";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -70,6 +75,46 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Jobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/jobs/new"
+            element={
+              <ProtectedRoute>
+                <NewJob />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customers"
+            element={
+              <ProtectedRoute>
+                <Customers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inventory"
+            element={
+              <ProtectedRoute>
+                <Inventory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invoices"
+            element={
+              <ProtectedRoute>
+                <Invoices />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pos"
+            element={
+              <ProtectedRoute>
+                <POS />
               </ProtectedRoute>
             }
           />

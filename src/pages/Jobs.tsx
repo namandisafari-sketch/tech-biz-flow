@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import JobStatusBadge from "@/components/JobStatusBadge";
 import { Button } from "@/components/ui/button";
@@ -84,6 +85,8 @@ const jobs = [
 ];
 
 export default function Jobs() {
+  const navigate = useNavigate();
+  
   return (
     <Layout>
       <div className="p-8 space-y-6">
@@ -95,7 +98,7 @@ export default function Jobs() {
               Track and manage all repair jobs
             </p>
           </div>
-          <Button size="lg" className="gap-2">
+          <Button size="lg" className="gap-2" onClick={() => navigate("/jobs/new")}>
             <Plus className="h-4 w-4" />
             New Job
           </Button>
