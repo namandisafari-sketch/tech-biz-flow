@@ -1,57 +1,57 @@
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { InvoicePrint } from "./InvoicePrint";
 import { usePrint } from "@/hooks/usePrint";
-import { FileText, Printer } from "lucide-react";
+import { Printer, Share2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface PrintInvoiceDialogProps {
   invoiceData: any;
   trigger?: React.ReactNode;
 }
 
-export default function PrintInvoiceDialog({
-  invoiceData,
-  trigger,
-}: PrintInvoiceDialogProps) {
-  const [open, setOpen] = useState(false);
+export default function PrintInvoiceDialog({ invoiceData, trigger }: PrintInvoiceDialogProps) {
   const { componentRef, handlePrint } = usePrint();
 
+  const handleWhatsAppShare = () => {
+    const message = `Hello ${invoiceData.customer_name},\n\nYour invoice is ready!\n\nInvoice #: ${invoiceData.invoice_number}\nDevice: ${invoiceData.device_type} ${invoiceData.device_model}\nTotal: UGX ${invoiceData.total_due.toLocaleString()}\nPaid: UGX ${invoiceData.amount_paid.toLocaleString()}\nBalance: UGX ${invoiceData.balance_due.toLocaleString()}\n\nThank you for your business!\n${invoiceData.shop_name}`;
+    
+    const phoneNumber = invoiceData.customer_phone?.replace(/\D/g, '') || '';
+    const whatsappUrl = phoneNumber 
+      ? `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+      : `https://wa.me/?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappUrl, '_blank');
+    toast.success("Opening WhatsApp...");
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         {trigger || (
-          <Button variant="outline" size="sm" className="gap-2">
-            <FileText className="h-4 w-4" />
-            Print Invoice
+          <Button variant="outline" size="sm">
+            <Printer className="h-4 w-4" />
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Invoice Preview</DialogTitle>
-          <DialogDescription>
-            Review and print the invoice
-          </DialogDescription>
         </DialogHeader>
-        <div className="mt-4">
-          <InvoicePrint ref={componentRef} data={invoiceData} />
-        </div>
-        <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handlePrint} className="gap-2">
-            <Printer className="h-4 w-4" />
-            Print
-          </Button>
+        <div className="space-y-4">
+          <div ref={componentRef}>
+            <InvoicePrint data={invoiceData} />
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={handlePrint} className="flex-1 gap-2">
+              <Printer className="h-4 w-4" />
+              Print Invoice
+            </Button>
+            <Button onClick={handleWhatsAppShare} variant="outline" className="flex-1 gap-2">
+              <Share2 className="h-4 w-4" />
+              Send via WhatsApp
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

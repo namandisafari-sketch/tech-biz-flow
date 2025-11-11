@@ -35,6 +35,7 @@ export default function NewJob() {
     phone: "",
     email: "",
     address: "",
+    customer_type: "retail" as "retail" | "wholesale",
   });
 
   // Fetch customers
@@ -73,7 +74,7 @@ export default function NewJob() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
       setFormData({ ...formData, customer_id: data.id });
-      setNewCustomer({ name: "", phone: "", email: "", address: "" });
+      setNewCustomer({ name: "", phone: "", email: "", address: "", customer_type: "retail" });
       toast({
         title: "Customer created",
         description: "New customer has been added successfully.",
@@ -89,6 +90,10 @@ export default function NewJob() {
 
       const jobRef = `JOB-${Date.now().toString().slice(-6)}`;
       
+      // Get customer type
+      const customer = customers.find((c: any) => c.id === formData.customer_id);
+      const customerType = customer?.customer_type || "retail";
+      
       const { data, error } = await supabase
         .from("jobs")
         .insert([
@@ -96,6 +101,7 @@ export default function NewJob() {
             ...formData,
             job_ref: jobRef,
             user_id: user.id,
+            customer_type: customerType,
             balance_due: formData.total_amount,
           },
         ])

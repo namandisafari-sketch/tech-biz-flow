@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -10,6 +11,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Customers() {
   const { toast } = useToast();
@@ -22,6 +24,7 @@ export default function Customers() {
     phone: "",
     email: "",
     address: "",
+    customer_type: "retail" as "retail" | "wholesale",
   });
 
   // Fetch customers
@@ -102,7 +105,7 @@ export default function Customers() {
   });
 
   const resetForm = () => {
-    setFormData({ name: "", phone: "", email: "", address: "" });
+    setFormData({ name: "", phone: "", email: "", address: "", customer_type: "retail" });
     setEditingCustomer(null);
   };
 
@@ -113,6 +116,7 @@ export default function Customers() {
       phone: customer.phone || "",
       email: customer.email || "",
       address: customer.address || "",
+      customer_type: (customer.customer_type as "retail" | "wholesale") || "retail",
     });
     setDialogOpen(true);
   };
@@ -203,6 +207,23 @@ export default function Customers() {
                     placeholder="Customer address"
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="customer_type">Customer Type</Label>
+                  <Select
+                    value={formData.customer_type}
+                    onValueChange={(value: "retail" | "wholesale") =>
+                      setFormData({ ...formData, customer_type: value })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="retail">Retail</SelectItem>
+                      <SelectItem value="wholesale">Wholesale</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="flex justify-end gap-2">
                   <Button
                     type="button"
@@ -245,11 +266,12 @@ export default function Customers() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Address</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Address</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -257,6 +279,11 @@ export default function Customers() {
                     <TableRow key={customer.id}>
                       <TableCell className="font-medium">
                         {customer.name}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={customer.customer_type === "wholesale" ? "default" : "secondary"}>
+                          {customer.customer_type || "retail"}
+                        </Badge>
                       </TableCell>
                       <TableCell>{customer.phone || "-"}</TableCell>
                       <TableCell>{customer.email || "-"}</TableCell>

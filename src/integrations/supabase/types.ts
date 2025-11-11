@@ -60,6 +60,7 @@ export type Database = {
         Row: {
           address: string | null
           created_at: string
+          customer_type: string
           email: string | null
           id: string
           name: string
@@ -70,6 +71,7 @@ export type Database = {
         Insert: {
           address?: string | null
           created_at?: string
+          customer_type?: string
           email?: string | null
           id?: string
           name: string
@@ -80,6 +82,7 @@ export type Database = {
         Update: {
           address?: string | null
           created_at?: string
+          customer_type?: string
           email?: string | null
           id?: string
           name?: string
@@ -104,6 +107,7 @@ export type Database = {
           unit_price: number | null
           updated_at: string
           user_id: string
+          wholesale_price: number | null
         }
         Insert: {
           category?: string | null
@@ -119,6 +123,7 @@ export type Database = {
           unit_price?: number | null
           updated_at?: string
           user_id: string
+          wholesale_price?: number | null
         }
         Update: {
           category?: string | null
@@ -134,6 +139,7 @@ export type Database = {
           unit_price?: number | null
           updated_at?: string
           user_id?: string
+          wholesale_price?: number | null
         }
         Relationships: []
       }
@@ -185,6 +191,7 @@ export type Database = {
           balance_due: number | null
           created_at: string
           customer_id: string | null
+          customer_type: string | null
           device_imei: string | null
           device_model: string | null
           device_serial_number: string | null
@@ -206,6 +213,7 @@ export type Database = {
           balance_due?: number | null
           created_at?: string
           customer_id?: string | null
+          customer_type?: string | null
           device_imei?: string | null
           device_model?: string | null
           device_serial_number?: string | null
@@ -227,6 +235,7 @@ export type Database = {
           balance_due?: number | null
           created_at?: string
           customer_id?: string | null
+          customer_type?: string | null
           device_imei?: string | null
           device_model?: string | null
           device_serial_number?: string | null

@@ -25,6 +25,7 @@ export default function POS() {
   const [searchQuery, setSearchQuery] = useState("");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [customerType, setCustomerType] = useState<"retail" | "wholesale">("retail");
   const [paymentMethod, setPaymentMethod] = useState("cash");
 
   // Fetch inventory
@@ -65,6 +66,10 @@ export default function POS() {
   });
 
   const addToCart = (item: any) => {
+    const price = customerType === "wholesale" 
+      ? parseFloat(item.wholesale_price || item.unit_price)
+      : parseFloat(item.unit_price);
+      
     const existingItem = cart.find((i) => i.id === item.id);
     if (existingItem) {
       if (existingItem.quantity >= item.quantity) {
@@ -86,7 +91,7 @@ export default function POS() {
         {
           id: item.id,
           name: item.name,
-          price: parseFloat(item.unit_price),
+          price,
           quantity: 1,
           stock: item.quantity,
         },
@@ -278,10 +283,36 @@ export default function POS() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
+                  <Label>Customer Type</Label>
+                  <Select
+                    value={customerType}
+                    onValueChange={(value: "retail" | "wholesale") => {
+                      setCustomerType(value);
+                      setCart([]);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="retail">Retail</SelectItem>
+                      <SelectItem value="wholesale">Wholesale</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-2">
                   <Label>Customer (Optional)</Label>
                   <Select
                     value={selectedCustomer}
-                    onValueChange={setSelectedCustomer}
+                    onValueChange={(value) => {
+                      setSelectedCustomer(value);
+                      const customer = customers.find((c: any) => c.id === value);
+                      if (customer?.customer_type) {
+                        setCustomerType(customer.customer_type as "retail" | "wholesale");
+                        setCart([]);
+                      }
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Walk-in customer" />
@@ -289,7 +320,7 @@ export default function POS() {
                     <SelectContent>
                       {customers.map((customer: any) => (
                         <SelectItem key={customer.id} value={customer.id}>
-                          {customer.name}
+                          {customer.name} ({customer.customer_type || "retail"})
                         </SelectItem>
                       ))}
                     </SelectContent>

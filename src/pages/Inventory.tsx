@@ -26,6 +26,7 @@ export default function Inventory() {
     quantity: 0,
     reorder_level: 5,
     unit_price: 0,
+    wholesale_price: 0,
     cost_price: 0,
     supplier: "",
     description: "",
@@ -102,6 +103,7 @@ export default function Inventory() {
       quantity: 0,
       reorder_level: 5,
       unit_price: 0,
+      wholesale_price: 0,
       cost_price: 0,
       supplier: "",
       description: "",
@@ -118,6 +120,7 @@ export default function Inventory() {
       quantity: item.quantity,
       reorder_level: item.reorder_level,
       unit_price: parseFloat(item.unit_price),
+      wholesale_price: parseFloat(item.wholesale_price || 0),
       cost_price: parseFloat(item.cost_price),
       supplier: item.supplier || "",
       description: item.description || "",
@@ -258,7 +261,7 @@ export default function Inventory() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="unit_price">Selling Price (UGX)</Label>
+                    <Label htmlFor="unit_price">Retail Price (UGX)</Label>
                     <Input
                       id="unit_price"
                       type="number"
@@ -268,6 +271,21 @@ export default function Inventory() {
                         setFormData({
                           ...formData,
                           unit_price: parseFloat(e.target.value) || 0,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="wholesale_price">Wholesale Price (UGX)</Label>
+                    <Input
+                      id="wholesale_price"
+                      type="number"
+                      step="0.01"
+                      value={formData.wholesale_price}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          wholesale_price: parseFloat(e.target.value) || 0,
                         })
                       }
                     />
@@ -356,8 +374,8 @@ export default function Inventory() {
                     <TableHead>SKU</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead className="text-right">Quantity</TableHead>
-                    <TableHead className="text-right">Cost</TableHead>
-                    <TableHead className="text-right">Price</TableHead>
+                    <TableHead className="text-right">Retail</TableHead>
+                    <TableHead className="text-right">Wholesale</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
@@ -370,10 +388,10 @@ export default function Inventory() {
                       <TableCell>{item.category || "-"}</TableCell>
                       <TableCell className="text-right">{item.quantity}</TableCell>
                       <TableCell className="text-right">
-                        UGX {parseFloat(item.cost_price).toLocaleString()}
+                        UGX {parseFloat(item.unit_price).toLocaleString()}
                       </TableCell>
                       <TableCell className="text-right">
-                        UGX {parseFloat(item.unit_price).toLocaleString()}
+                        UGX {parseFloat(item.wholesale_price || 0).toLocaleString()}
                       </TableCell>
                       <TableCell>
                         {item.quantity <= item.reorder_level ? (
