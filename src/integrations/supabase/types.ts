@@ -14,7 +14,243 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      business_settings: {
+        Row: {
+          created_at: string
+          id: string
+          logo_url: string | null
+          payment_details: string | null
+          shop_address: string | null
+          shop_email: string | null
+          shop_name: string
+          shop_phone: string | null
+          tax_percent: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          payment_details?: string | null
+          shop_address?: string | null
+          shop_email?: string | null
+          shop_name: string
+          shop_phone?: string | null
+          tax_percent?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          payment_details?: string | null
+          shop_address?: string | null
+          shop_email?: string | null
+          shop_name?: string
+          shop_phone?: string | null
+          tax_percent?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customers: {
+        Row: {
+          address: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      job_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          job_id: string | null
+          part_serial_number: string | null
+          quantity: number | null
+          total: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          job_id?: string | null
+          part_serial_number?: string | null
+          quantity?: number | null
+          total: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          job_id?: string | null
+          part_serial_number?: string | null
+          quantity?: number | null
+          total?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_items_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          amount_paid: number | null
+          assigned_to: string | null
+          balance_due: number | null
+          created_at: string
+          customer_id: string | null
+          device_imei: string | null
+          device_model: string | null
+          device_serial_number: string | null
+          device_state_before: string | null
+          device_type: string
+          due_date: string | null
+          fault_description: string | null
+          id: string
+          job_ref: string
+          priority: string | null
+          status: string
+          total_amount: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_paid?: number | null
+          assigned_to?: string | null
+          balance_due?: number | null
+          created_at?: string
+          customer_id?: string | null
+          device_imei?: string | null
+          device_model?: string | null
+          device_serial_number?: string | null
+          device_state_before?: string | null
+          device_type: string
+          due_date?: string | null
+          fault_description?: string | null
+          id?: string
+          job_ref: string
+          priority?: string | null
+          status?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_paid?: number | null
+          assigned_to?: string | null
+          balance_due?: number | null
+          created_at?: string
+          customer_id?: string | null
+          device_imei?: string | null
+          device_model?: string | null
+          device_serial_number?: string | null
+          device_state_before?: string | null
+          device_type?: string
+          due_date?: string | null
+          fault_description?: string | null
+          id?: string
+          job_ref?: string
+          priority?: string | null
+          status?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          job_id: string | null
+          payment_date: string
+          payment_method: string | null
+          payment_reference: string | null
+          receipt_no: string
+          served_by: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          payment_date?: string
+          payment_method?: string | null
+          payment_reference?: string | null
+          receipt_no: string
+          served_by?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          payment_date?: string
+          payment_method?: string | null
+          payment_reference?: string | null
+          receipt_no?: string
+          served_by?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
