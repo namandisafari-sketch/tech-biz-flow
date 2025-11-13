@@ -30,6 +30,7 @@ export default function Inventory() {
     cost_price: 0,
     supplier: "",
     description: "",
+    barcode: "",
   });
 
   // Fetch inventory
@@ -107,6 +108,7 @@ export default function Inventory() {
       cost_price: 0,
       supplier: "",
       description: "",
+      barcode: "",
     });
     setEditingItem(null);
   };
@@ -124,6 +126,7 @@ export default function Inventory() {
       cost_price: parseFloat(item.cost_price),
       supplier: item.supplier || "",
       description: item.description || "",
+      barcode: item.barcode || "",
     });
     setDialogOpen(true);
   };
@@ -194,6 +197,17 @@ export default function Inventory() {
                       onChange={(e) =>
                         setFormData({ ...formData, sku: e.target.value })
                       }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="barcode">Barcode</Label>
+                    <Input
+                      id="barcode"
+                      value={formData.barcode}
+                      onChange={(e) =>
+                        setFormData({ ...formData, barcode: e.target.value })
+                      }
+                      placeholder="Enter or scan barcode"
                     />
                   </div>
                   <div className="space-y-2">
@@ -372,6 +386,7 @@ export default function Inventory() {
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>SKU</TableHead>
+                    <TableHead>Barcode</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead className="text-right">Quantity</TableHead>
                     <TableHead className="text-right">Retail</TableHead>
@@ -385,6 +400,15 @@ export default function Inventory() {
                     <TableRow key={item.id}>
                       <TableCell className="font-medium">{item.name}</TableCell>
                       <TableCell>{item.sku || "-"}</TableCell>
+                      <TableCell>
+                        {item.barcode ? (
+                          <code className="text-xs bg-muted px-2 py-1 rounded">
+                            {item.barcode}
+                          </code>
+                        ) : (
+                          "-"
+                        )}
+                      </TableCell>
                       <TableCell>{item.category || "-"}</TableCell>
                       <TableCell className="text-right">{item.quantity}</TableCell>
                       <TableCell className="text-right">
