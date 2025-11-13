@@ -12,6 +12,8 @@ import Customers from "./pages/Customers";
 import Inventory from "./pages/Inventory";
 import Invoices from "./pages/Invoices";
 import POS from "./pages/POS";
+import BarcodeGenerator from "./pages/BarcodeGenerator";
+import About from "./pages/About";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -102,22 +104,38 @@ const App = () => (
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/invoices"
-            element={
-              <ProtectedRoute>
-                <Invoices />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pos"
-            element={
-              <ProtectedRoute>
-                <POS />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/sales-history"
+              element={
+                <ProtectedRoute>
+                  <Invoices />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pos"
+              element={
+                <ProtectedRoute>
+                  <POS />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/barcode"
+              element={
+                <ProtectedRoute>
+                  <BarcodeGenerator />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <ProtectedRoute>
+                  <About />
+                </ProtectedRoute>
+              }
+            />
           <Route
             path="/settings"
             element={

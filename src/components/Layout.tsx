@@ -8,8 +8,10 @@ import {
   Package,
   Users,
   Receipt,
-  BarChart3,
+  ShoppingCart,
+  Barcode,
   Settings,
+  Info,
   LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,9 +25,11 @@ const menuItems = [
   { icon: Wrench, label: "Jobs", path: "/jobs" },
   { icon: Users, label: "Customers", path: "/customers" },
   { icon: Package, label: "Inventory", path: "/inventory" },
-  { icon: Receipt, label: "Invoices", path: "/invoices" },
-  { icon: BarChart3, label: "POS", path: "/pos" },
+  { icon: Receipt, label: "Sales History", path: "/sales-history" },
+  { icon: ShoppingCart, label: "POS", path: "/pos" },
+  { icon: Barcode, label: "Barcode", path: "/barcode" },
   { icon: Settings, label: "Settings", path: "/settings" },
+  { icon: Info, label: "About", path: "/about" },
 ];
 
 export default function Layout({ children }: LayoutProps) {

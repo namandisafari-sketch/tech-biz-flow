@@ -113,9 +113,9 @@ export default function Invoices() {
       <div className="p-8 space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Invoices</h1>
+            <h1 className="text-3xl font-bold">Sales History</h1>
             <p className="text-muted-foreground mt-1">
-              View and print customer invoices
+              View all completed sales and invoices
             </p>
           </div>
           <Button size="lg" className="gap-2" variant="outline">
