@@ -99,7 +99,7 @@ export default function Dashboard() {
           />
           <StatCard
             title="Today's Revenue"
-            value="$2,450"
+            value="UGX 2,450,000"
             icon={DollarSign}
             trend={{ value: "8% from yesterday", isPositive: true }}
             variant="success"
@@ -248,7 +248,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Revenue</span>
-                  <span className="text-lg font-bold">$8,450</span>
+                  <span className="text-lg font-bold">UGX 8,450,000</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Avg. Time</span>
